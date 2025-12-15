@@ -18,4 +18,9 @@ public class FallbackController {
     public String appointmentFallback(){
         return "Appointment Service is Down..";
     }
+    @GetMapping("/billFallback")
+    public String billFallback(){
+        return "Bill Service is Down..";
+    }
+
 }

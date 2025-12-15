@@ -4,6 +4,10 @@ import com.bookAppointment.doctor_service.entity.Doctor;
 import com.bookAppointment.doctor_service.exception.DoctorNotFound;
 import com.bookAppointment.doctor_service.repository.DoctorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +18,9 @@ public class DoctorServiceImpl implements DoctorService{
     DoctorRepo repo;
 
     @Override
-    public List<Doctor> getAllDoctors() {
-        return repo.findAll();
+    public Page<Doctor> getAllDoctors(int pageNo,int pageSize,String sortBy) {
+        Pageable pageable= PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        return repo.findAll(pageable);
     }
     @Override
     public Doctor getDoctorById(Long id) {

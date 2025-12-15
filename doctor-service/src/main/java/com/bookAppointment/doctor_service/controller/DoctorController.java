@@ -3,6 +3,7 @@ package com.bookAppointment.doctor_service.controller;
 import com.bookAppointment.doctor_service.entity.Doctor;
 import com.bookAppointment.doctor_service.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,12 @@ public class DoctorController {
     DoctorService service;
 
     @GetMapping
-    public ResponseEntity<List<Doctor>> getAllDoctors(){
-        List<Doctor> doctor=service.getAllDoctors();
+    public ResponseEntity<Page<Doctor>> getAllDoctors(
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "5") int pageSize,
+            @RequestParam(defaultValue = "doctorName") String  sortBy
+    ){
+        Page<Doctor> doctor=service.getAllDoctors(pageNo,pageSize,sortBy);
         return ResponseEntity.ok(doctor);
     }
     @GetMapping("/{id}")
